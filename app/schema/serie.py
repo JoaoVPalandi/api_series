@@ -10,3 +10,4 @@ class SerieSchema(BaseModel):
     class Config:
         from_attributes = True
 
+

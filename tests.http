@@ -22,12 +22,17 @@ Content-Type: application/json
 GET {{base_url}}/series HTTP/1.1
 Accept: application/json
 
+### Deletar série
+DELETE {{base_url}}/delete/1 HTTP/1.1
+Accept: application/json
+
 ### Atualizar séries
 PUT {{base_url}}/update/1 HTTP/1.1
 Accept: application/json
 
 {
-    "titulo": "Laranja",
-    "descricao": "Laranja, Laranja",
-    "ano_lacamento": 2000
-}   
+    "titulo": "Jujutsu Kaisen",
+    "descricao": "Série de anime sobre um estudante do ensino médio que se envolve em um mundo de feitiçaria e maldições",
+    "ano_lancamento": 2020
+}
+

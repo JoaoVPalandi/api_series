@@ -23,11 +23,32 @@ async def listar_series(db: Session = Depends(get_db)):
 async def atualizar_serie(id: int, dados: SerieSchema, db: Session = Depends(get_db)):
     serie = db.query(SerieModel).filter(SerieModel.id == id).first()
     if not serie:
-        return ("Série não encontrada")
+        raise HTTPException(
+            status_code = status.HTTP_404_NOT_FOUND, 
+            detail = f"Série com ID {id} não encontrada"
+            )
 
     db.query(SerieModel).filter(SerieModel.id == id).update(dados.model_dump(exclude_unset=True))
     db.commit()
     return (dados)
+
+# @serie.get('/update/{id}')
+# async def atulizar_serie(id: int, dados: SerieSchema, db: Session = Depends(get_db)):
+#     serie = db.query(SerieModel).filter(SerieModel.id == id).first
+
+#     if not serie:
+#         raise HTTPException(
+#             status_code = statuis.HTTP_404_NOT_FOUND, 
+#             detail = f"Série com ID {id} não encontrada"
+#             )
+
+#     for campo, valor in dados.model_dump().items():
+#         setattr(serie, campo, valor)
+    
+#     db.commit()
+#     db.refresh(serie)
+
+#     return serie
 
         
 @serie.delete('/delete/{id}')
@@ -35,7 +56,11 @@ async def deletar_serie(id: int, db: Session = Depends(get_db)):
    id = db.query(SerieModel).filter(SerieModel.id == id).first()
 
    if not id:
-       return ('Id não encontrado')
+       raise HTTPException(
+            status_code = status.HTTP_404_NOT_FOUND, 
+            detail = f"Série com ID {id} não encontrada"
+            )
+   
    db.delete(id)
    db.commit()
    return('Pronto, id deletado')
